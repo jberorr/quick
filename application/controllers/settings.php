@@ -29,7 +29,7 @@ $user = User::_info();
 $ui->assign('user', $user);
 $ui->assign('_user', $user);
 
-$update_server = 'http://dashboard.cloudonex.com/';
+$update_server = 'http://localhost/quickpcservice.in/';
 // $update_server = 'http://localhost/ibilling/ibilling/';
 
 

@@ -48,76 +48,98 @@ class Backup{
      */
     function backupDatabaseMySqli( $directory, $outname , $action='store' ) {
 
-        // check mysqli extension installed
-        if( ! function_exists('mysqli_connect') ) {
-            die(' This scripts need mysql extension to be running properly ! please resolve!!');
+        // Check mysqli extension installed
+        if (!is_function_enabled('mysqli_connect')) {
+            die('MySQLi extension is required for backup functionality. Please ensure MySQLi is enabled in your PHP installation.');
         }
 
-        $mysqli = @new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-
-        if( $mysqli->connect_error ) {
-            print_r( $mysqli->connect_error );
+        try {
+            $mysqli = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
+            
+            if ($mysqli->connect_error) {
+                error_log('Database connection error: ' . $mysqli->connect_error);
+                return false;
+            }
+            
+            // Set charset to UTF-8
+            $mysqli->set_charset('utf8mb4');
+        } catch (Exception $e) {
+            error_log('Backup initialization error: ' . $e->getMessage());
             return false;
         }
 
         $dir = $directory;
-        $result = '<p> Could not create backup directory on :'.$dir.' Please Please make sure you have set Directory on 755 or 777 for a while.</p>';
+        $result = '<p>Could not create backup directory on: ' . htmlspecialchars($dir) . '. Please ensure the directory has proper permissions (755 or 777).</p>';
         $res = true;
-        if( ! is_dir( $dir ) ) {
-            if( ! @mkdir( $dir, 755 )) {
+        
+        if (!is_dir($dir)) {
+            if (!@mkdir($dir, 0755, true)) {
                 $res = false;
             }
         }
 
         $n = 1;
-        if( $res ) {
+        if ($res) {
 
-            $name     = $outname;
-            # counts
-            if( file_exists($dir.'/'.$name.'.sql.gz' ) ) {
+            $name = $outname;
+            # Counts and handles file naming
+            if (file_exists($dir . '/' . $name . '.sql.gz')) {
 
-                for($i=1;@count( file($dir.'/'.$name.'_'.$i.'.sql.gz') );$i++){
-                    $name = $name;
-                    if( ! file_exists( $dir.'/'.$name.'_'.$i.'.sql.gz') ) {
-                        $name = $name.'_'.$i;
+                for ($i = 1; $i < 1000; $i++) {
+                    $check_file = $dir . '/' . $name . '_' . $i . '.sql.gz';
+                    if (!file_exists($check_file)) {
+                        $name = $name . '_' . $i;
                         break;
                     }
                 }
             }
 
-            $fullname = $dir.'/'.$name.'.sql.gz'; # full structures
+            $fullname = $dir . '/' . $name . '.sql.gz';
 
-            if( ! $mysqli->error ) {
-                $sql = "SHOW TABLES";
-                $show = $mysqli->query($sql);
-                while ( $r = $show->fetch_array() ) {
-                    $tables[] = $r[0];
-                }
+            // Query results safely
+            $sql = "SHOW TABLES";
+            $show = $mysqli->query($sql);
+            
+            if (!$show) {
+                error_log('Database query error: ' . $mysqli->error);
+                return false;
+            }
+            
+            $tables = [];
+            while ($r = $show->fetch_array()) {
+                $tables[] = $r[0];
+            }
 
-                if( ! empty( $tables ) ) {
+            if (!empty($tables)) {
 
-                    //cycle through
-                    $return = '';
-                    foreach( $tables as $table )
-                    {
-                        $result     = $mysqli->query('SELECT * FROM '.$table);
-                        $num_fields = $result->field_count;
-                        $row2       = $mysqli->query('SHOW CREATE TABLE '.$table );
+                // Cycle through tables
+                $return = '';
+                foreach ($tables as $table) {
+                    $table = $mysqli->real_escape_string($table);
+                    $result = $mysqli->query('SELECT * FROM `' . $table . '`');
+                    
+                    if (!$result) {
+                        error_log('Failed to query table ' . $table . ': ' . $mysqli->error);
+                        continue;
+                    }
+                    
+                    $num_fields = $result->field_count;
+                    $row2 = $mysqli->query('SHOW CREATE TABLE `' . $table . '`');
 
-                        $row2       = $row2->fetch_row();
-                        $return    .=
+                    if ($row2) {
+                        $row2 = $row2->fetch_row();
+                        $return .=
                             "\n
 -- ---------------------------------------------------------
 --
--- Table structure for table : `{$table}`
+-- Table structure for table : `" . addslashes($table) . "`
 --
 -- ---------------------------------------------------------
 
-".$row2[1].";\n";
+" . $row2[1] . ";\n";
 
                         for ($i = 0; $i < $num_fields; $i++)
                         {
-
                             $n = 1 ;
                             while( $row = $result->fetch_row() )
                             {

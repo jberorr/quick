@@ -88,129 +88,256 @@ Class Invoice
 
     public static function pdf($id,$r_type='',$token=''){
 
-        global $config,$_L,$pdf_tpl;
+        global $config,$_L;
 
+        // Get invoice data
         $d = ORM::for_table('sys_invoices')->find_one($id);
-        if ($d) {
-
-            if($token != ''){
-
-                $token = str_replace('token_','',$token);
-                $vtoken = $d->vtoken;
-                if($token != $vtoken){
-                    echo 'Sorry Token does not match!';
-                    exit;
-                }
-
-            }
-
-            //find all activity for this user
-            $items = ORM::for_table('sys_invoiceitems')->where('invoiceid', $id)->order_by_asc('id')->find_many();
-
-            $trs_c = ORM::for_table('sys_transactions')->where('iid', $id)->count();
-
-            $trs = ORM::for_table('sys_transactions')->where('iid', $id)->order_by_desc('id')->find_many();
-
-//find the user
-            $a = ORM::for_table('crm_accounts')->find_one($d['userid']);
-            $i_credit = $d['credit'];
-            $i_due = '0.00';
-            $i_total = $d['total'];
-            if($d['credit'] != '0.00'){
-                $i_due = $i_total - $i_credit;
-            }
-            else{
-                $i_due =  $d['total'];
-            }
-
-//            $i_due = number_format($i_due,2,$config['dec_point'],$config['thousands_sep']);
-            $cf = ORM::for_table('crm_customfields')->where('showinvoice', 'Yes')->order_by_asc('id')->find_many();
-
-
-
-            if($d['cn'] != ''){
-                $dispid = $d['cn'];
-            }
-            else{
-                $dispid = $d['id'];
-            }
-
-            $in = $d['invoicenum'].$dispid;
-
-//            define('_MPDF_PATH','system/lib/mpdf/');
-
-//            require('system/lib/mpdf/mpdf.php');
-
-            $pdf_c = '';
-            $ib_w_font = 'dejavusanscondensed';
-            if($config['pdf_font'] == 'default'){
-                $pdf_c = 'c';
-                $ib_w_font = 'Helvetica';
-            }
-
-//            $mpdf=new mPDF($pdf_c,'A4','','',20,15,15,25,10,10);
-
-            $mpdf = new \Mpdf\Mpdf();
-
-//            $mpdf->SetProtection(array('print'));
-            $mpdf->SetTitle($config['CompanyName'].' Invoice');
-            $mpdf->SetAuthor($config['CompanyName']);
-            $mpdf->SetWatermarkText(ib_lan_get_line($d['status']));
-            $mpdf->showWatermarkText = true;
-            $mpdf->watermark_font = $ib_w_font;
-            $mpdf->watermarkTextAlpha = 0.1;
-            $mpdf->SetDisplayMode('fullpage');
-
-            if($config['pdf_font'] == 'AdobeCJK'){
-                $mpdf->useAdobeCJK = true;
-                $mpdf->autoScriptToLang = true;
-                $mpdf->autoLangToFont = true;
-            }
-
-            $pdf_tpl = 'application/lib/invoices/pdf-x2.php';
-
-            Event::trigger('invoices/before_pdf_render/',array($id));
-
-            ob_start();
-
-            require $pdf_tpl;
-
-            $html = ob_get_contents();
-
-
-            ob_end_clean();
-
-            $mpdf->WriteHTML($html);
-
-
-
-
-            if ($r_type == 'dl') {
-                $mpdf->Output(date('Y-m-d') . _raid(4) . '.pdf', 'D'); # D
-            }
-
-            elseif ($r_type == 'inline') {
-                $mpdf->Output(date('Y-m-d') . _raid(4) . '.pdf', 'I'); # D
-            }
-
-            elseif ($r_type == 'store') {
-
-                $mpdf->Output('storage/temp/Invoice_'.$in.'.pdf', 'F'); # D
-
-
-            }
-
-            else {
-                $mpdf->Output(date('Y-m-d') . _raid(4) . '.pdf', 'I'); # D
-            }
-
-
-
-
+        if (!$d) {
+            die('Invoice not found');
         }
 
+        // Verify token if provided
+        if($token != ''){
+            $token = str_replace('token_','',$token);
+            $vtoken = $d['vtoken'];
+            if($token != $vtoken){
+                die('Token verification failed');
+            }
+        }
 
+        // Get invoice items and related data
+        $items = ORM::for_table('sys_invoiceitems')->where('invoiceid', $id)->order_by_asc('id')->find_many();
 
+        // Get customer data
+        $a = ORM::for_table('crm_accounts')->find_one($d['userid']);
+        
+        // Calculate due amount
+        $i_credit = $d['credit'];
+        $i_due = '0.00';
+        $i_total = $d['total'];
+        
+        if($d['credit'] != '0.00'){
+            $i_due = $i_total - $i_credit;
+        }
+        else{
+            $i_due = $d['total'];
+        }
+
+        // Prepare display ID
+        if($d['cn'] != ''){
+            $dispid = $d['cn'];
+        }
+        else{
+            $dispid = $d['id'];
+        }
+
+        $in = $d['invoicenum'].$dispid;
+
+        // Generate professional invoice HTML
+        $html = '<!DOCTYPE html><html><head><meta charset="UTF-8" /><style>';
+        $html .= 'body { font-family: Arial, sans-serif; color: #333; margin: 0; padding: 20px; }';
+        $html .= 'table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }';
+        $html .= 'th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }';
+        $html .= 'th { background-color: #2c3e50; color: white; font-weight: bold; }';
+        $html .= 'tr:nth-child(even) { background-color: #f5f5f5; }';
+        $html .= '.header { text-align: center; margin-bottom: 30px; border-bottom: 3px solid #2c3e50; padding-bottom: 20px; }';
+        $html .= '.header h1 { color: #2c3e50; margin: 0 0 10px 0; font-size: 24px; }';
+        $html .= '.header h2 { color: #666; margin: 0; font-size: 18px; }';
+        $html .= '.company-info { margin-bottom: 20px; font-size: 12px; }';
+        $html .= '.invoice-details { margin-bottom: 20px; }';
+        $html .= '.section-title { font-weight: bold; margin-top: 15px; margin-bottom: 10px; font-size: 13px; background-color: #ecf0f1; padding: 8px; }';
+        $html .= '.total-row { font-weight: bold; background-color: #e8f5e9; }';
+        $html .= '.total-amount { color: #27ae60; font-size: 14px; font-weight: bold; }';
+        $html .= '.summary-table { width: 50%; margin-left: auto; margin-top: 20px; margin-bottom: 20px; }';
+        $html .= '.summary-table td { border: 1px solid #ddd; padding: 8px; }';
+        $html .= '</style></head><body>';
+
+        // Header
+        $html .= '<div class="header">';
+        $html .= '<h1>' . htmlspecialchars($config['CompanyName']) . '</h1>';
+        $html .= '<h2>INVOICE</h2>';
+        $html .= '</div>';
+
+        // Company and Invoice Details
+        $html .= '<div class="company-info">';
+        $html .= '<p><strong>Invoice Number:</strong> ' . htmlspecialchars($d['invoicenum'] . $dispid) . '</p>';
+        $html .= '<p><strong>Invoice Date:</strong> ' . htmlspecialchars($d['date']) . '</p>';
+        $html .= '<p><strong>Due Date:</strong> ' . htmlspecialchars($d['duedate']) . '</p>';
+        $html .= '<p><strong>Status:</strong> <strong style="color: #2c3e50;">' . htmlspecialchars($d['status']) . '</strong></p>';
+        if ($config['caddress']) {
+            $html .= '<p><strong>Address:</strong> ' . htmlspecialchars($config['caddress']) . '</p>';
+        }
+        $html .= '</div>';
+
+        // Bill To
+        $html .= '<div class="section-title">BILL TO:</div>';
+        $html .= '<div style="margin-bottom: 20px; font-size: 12px;">';
+        if ($a) {
+            if ($a['company']) {
+                $html .= '<p><strong>' . htmlspecialchars($a['company']) . '</strong></p>';
+            }
+            $html .= '<p>' . htmlspecialchars($a['account']) . '</p>';
+            if ($a['address']) {
+                $html .= '<p>' . htmlspecialchars($a['address']) . '</p>';
+            }
+            if ($a['city'] || $a['state'] || $a['zip']) {
+                $html .= '<p>' . htmlspecialchars(trim($a['city'] . ' ' . $a['state'] . ' ' . $a['zip'])) . '</p>';
+            }
+            if ($a['country']) {
+                $html .= '<p>' . htmlspecialchars($a['country']) . '</p>';
+            }
+            if ($a['phone']) {
+                $html .= '<p><strong>Phone:</strong> ' . htmlspecialchars($a['phone']) . '</p>';
+            }
+            if ($a['email']) {
+                $html .= '<p><strong>Email:</strong> ' . htmlspecialchars($a['email']) . '</p>';
+            }
+        }
+        $html .= '</div>';
+
+        // Line Items
+        $html .= '<div class="section-title">INVOICE ITEMS</div>';
+        $html .= '<table>';
+        $html .= '<thead><tr>';
+        $html .= '<th>Description</th>';
+        $html .= '<th style="text-align: right; width: 80px;">Price</th>';
+        $html .= '<th style="text-align: right; width: 80px;">Quantity</th>';
+        $html .= '<th style="text-align: right; width: 80px;">Total</th>';
+        $html .= '</tr></thead>';
+        $html .= '<tbody>';
+        
+        if ($items && count($items) > 0) {
+            foreach ($items as $item) {
+                $html .= '<tr>';
+                $html .= '<td>' . htmlspecialchars($item['description']) . '</td>';
+                $html .= '<td style="text-align: right;">' . htmlspecialchars($item['cost']) . '</td>';
+                $html .= '<td style="text-align: right;">' . htmlspecialchars($item['qty']) . '</td>';
+                $html .= '<td style="text-align: right;" style="font-weight: bold;">' . htmlspecialchars($item['total']) . '</td>';
+                $html .= '</tr>';
+            }
+        } else {
+            $html .= '<tr><td colspan="4" style="text-align: center; font-style: italic;">No items</td></tr>';
+        }
+        
+        $html .= '</tbody>';
+        $html .= '</table>';
+
+        // Summary Table
+        $html .= '<table class="summary-table">';
+        $html .= '<tr><td><strong>Subtotal:</strong></td><td style="text-align: right;">' . htmlspecialchars($d['subtotal']) . '</td></tr>';
+        if ($d['discount'] != '0.00') {
+            $html .= '<tr><td><strong>Discount:</strong></td><td style="text-align: right;">-' . htmlspecialchars($d['discount']) . '</td></tr>';
+        }
+        if ($d['tax'] != '0.00') {
+            $html .= '<tr><td><strong>Tax (' . htmlspecialchars($d['taxrate']) . '%):</strong></td><td style="text-align: right;">' . htmlspecialchars($d['tax']) . '</td></tr>';
+        }
+        $html .= '<tr class="total-row"><td><strong>TOTAL:</strong></td><td style="text-align: right;" class="total-amount">' . htmlspecialchars($d['total']) . '</td></tr>';
+        if ($d['credit'] != '0.00') {
+            $html .= '<tr><td><strong>Amount Paid (Credit):</strong></td><td style="text-align: right;">-' . htmlspecialchars($d['credit']) . '</td></tr>';
+            $html .= '<tr class="total-row"><td><strong>AMOUNT DUE:</strong></td><td style="text-align: right;" class="total-amount">' . htmlspecialchars($i_due) . '</td></tr>';
+        }
+        $html .= '</table>';
+
+        // Footer
+        $html .= '<div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc; font-size: 11px; color: #666; text-align: center;">';
+        $html .= '<p>Thank you for your business!</p>';
+        if ($config['CompanyEmail']) {
+            $html .= '<p>Email: ' . htmlspecialchars($config['CompanyEmail']) . '</p>';
+        }
+        $html .= '</div>';
+
+        $html .= '</body></html>';
+
+        // Clear output buffers
+        while (ob_get_level() > 0) {
+            ob_end_clean();
+        }
+
+        // Prepare filename
+        $filename = 'Invoice_' . preg_replace('/[^a-zA-Z0-9]/', '_', $d['invoicenum'] . $dispid) . '_' . date('Ymd') . '.pdf';
+
+        // Send headers FIRST before any output
+        header('Content-Type: application/pdf', true);
+        header('Content-Transfer-Encoding: binary', true);
+        header('Accept-Ranges: bytes', true);
+        
+        if ($r_type == 'dl') {
+            // Download - force browser to download
+            header('Content-Disposition: attachment; filename="' . $filename . '"', true);
+            $output_type = 'D';
+        } elseif ($r_type == 'store') {
+            // Store to file/temp - we'll set temp dir path for mPDF to store
+            $output_type = 'F';
+        } else {
+            // View in browser (default)
+            header('Content-Disposition: inline; filename="' . $filename . '"', true);
+            $output_type = 'I';
+        }
+        
+        header('Cache-Control: no-cache, no-store, must-revalidate', true);
+        header('Pragma: no-cache', true);
+        header('Expires: 0', true);
+        header('Connection: close', true);
+
+        // Generate PDF using mPDF from vendor directory
+        try {
+            // Use absolute path to ensure vendor autoload is found
+            if (!class_exists('\Mpdf\Mpdf')) {
+                require_once dirname(__FILE__) . '/../../vendor/autoload.php';
+            }
+            
+            $mpdf = new \Mpdf\Mpdf([
+                'tempDir' => sys_get_temp_dir(),
+                'format' => 'A4',
+                'margin_left' => 15,
+                'margin_right' => 15,
+                'margin_top' => 20,
+                'margin_bottom' => 20,
+                'orientation' => 'P',
+                'allow_output_buffer' => true
+            ]);
+            
+            // Set document properties
+            $mpdf->SetTitle($config['CompanyName'] . ' - Invoice ' . $filename);
+            $mpdf->SetAuthor($config['CompanyName']);
+            
+            // Write HTML to PDF
+            $mpdf->WriteHTML($html);
+            
+            // Output PDF based on type
+            if ($output_type == 'F') {
+                // Store to file
+                $store_path = 'storage/temp/' . $filename;
+                $mpdf->Output($store_path, 'F');
+            } else {
+                // Output to browser (inline or download)
+                $mpdf->Output($filename, $output_type);
+            }
+            
+            
+        } catch (Exception $e) {
+            // Clear any previous output
+            while (ob_get_level() > 0) {
+                ob_end_clean();
+            }
+            
+            // Send error headers
+            header('Content-Type: text/html; charset=utf-8', true);
+            header('Content-Disposition: inline', true);
+            
+            // Log the error
+            error_log('PDF Generation Error for Invoice ' . $id . ': ' . $e->getMessage());
+            error_log('Stack Trace: ' . $e->getTraceAsString());
+            
+            // Output error message
+            echo '<h1>PDF Generation Error</h1>';
+            echo '<p><strong>Error:</strong> ' . htmlspecialchars($e->getMessage()) . '</p>';
+            echo '<details><summary>Technical Details</summary><pre>';
+            echo htmlspecialchars($e->getTraceAsString());
+            echo '</pre></details>';
+        }
+
+        exit;
     }
 
 

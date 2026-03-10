@@ -4,12 +4,10 @@
 <!--
 Dynamically Auto Generated Page - Do Not Edit
 ================================================================
-Software Name: iBilling - CRM, Accounting and Invoicing Software
+Software Name: Quick PC Service Management System
 Version: 4.6.1
-Author: CloudOnex
-Website: http://www.cloudonex.com
-Contact: admin@ibilling.io
-Purchase: http://www.cloudonex.com
+Powered by: Quick PC Service
+Website: {$_c['CompanyWebsite']}
 License: You must have a valid license purchased in order to legally use this Software.
 =======================================================================================
 -->
@@ -35,14 +33,15 @@ License: You must have a valid license purchased in order to legally use this So
     <link href="{$_theme}/css/style.css?ver=2.0.1" rel="stylesheet">
     <link href="{$_theme}/css/component.css?ver=2.0.1" rel="stylesheet">
     <link href="{$_theme}/css/custom.css" rel="stylesheet">
-
-
     <link href="{$app_url}ui/lib/icons/css/ibilling_icons.css" rel="stylesheet">
-
-
     <link href="{$_theme}/css/material.css" rel="stylesheet">
-
     <link href="{$_theme}/css/{$_c['nstyle']}.css" rel="stylesheet">
+    
+    <!-- Responsive CSS for mobile and all devices -->
+    <link href="{$_theme}/css/responsive.css" rel="stylesheet">
+
+    <!-- Modern UI Enhancements -->
+    <link href="{$_theme}/css/modern-enhancements.css" rel="stylesheet">
 
     {foreach $plugin_ui_header_client as $plugin_ui_header_add}
         {$plugin_ui_header_add}
@@ -71,12 +70,10 @@ License: You must have a valid license purchased in order to legally use this So
                     <li class="nav-header">
                         <div class="dropdown profile-element"> <span>
 
-                {if $user['img'] eq 'gravatar'}
-                    <img src="http://www.gravatar.com/avatar/{($user['username'])|md5}?s=64" class="img-circle" alt="{$user['fullname']}">
-                                {elseif $user['img'] eq ''}
-                                    <img src="{$app_url}ui/lib/imgs/default-user-avatar.png"  class="img-circle" style="max-width: 64px;" alt="">
-                                {else}
-                                    <img src="{$user['img']}" class="img-circle" style="max-width: 64px;" alt="{$user['fullname']}">
+                {if $user['img'] eq '' || $user['img'] eq 'gravatar'}
+                    <img src="{$app_url}ui/lib/imgs/default-user-avatar.png"  class="img-circle" style="max-width: 64px;" alt="">
+                {else}
+                    <img src="{$user['img']}" class="img-circle" style="max-width: 64px;" alt="{$user['fullname']}">
                 {/if}
                              </span>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#" aria-expanded="false">
@@ -121,7 +118,7 @@ License: You must have a valid license purchased in order to legally use this So
             <div class="row border-bottom">
                 <nav class="navbar navbar-fixed-top white-bg" role="navigation" style="margin-bottom: 0">
 
-                    <img class="logo" style="max-height: 40px; width: auto;" src="{$app_url}application/storage/system/logo.png" alt="Logo">
+                    <img class="logo-responsive-header" src="{$app_url}application/storage/system/logo.png" alt="{$_c['CompanyName']} Logo" style="width: 150px !important; height: 40px !important; max-width: 150px !important; max-height: 40px !important; object-fit: contain; display: inline-block;">
 
                     <div class="navbar-header">
                         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary btn-flat" href="#"><i class="fa fa-dedent"></i> </a>

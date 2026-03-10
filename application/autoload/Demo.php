@@ -134,7 +134,7 @@ Class Demo {
 
 
 
-                update_option('CompanyName','CloudOnex LLC.');
+                update_option('CompanyName','Quick PC Service');
                 update_option('nstyle','dark');
                 update_option('currency_code','$');
                 update_option('country','United States');
@@ -144,7 +144,7 @@ Class Demo {
                 update_option('home_currency','USD');
                 update_option('momentLocale','en');
                 update_option('language','en');
-                update_option('caddress','CloudOnex <br>1101 Marina Villae Parkway, Suite 201<br>Alameda, California 94501<br>United State');
+                update_option('caddress','Quick PC Service <br>Your Address Here<br>Your City, State<br>Your Country');
 
                 update_option('graph_primary_color','2196f3');
 

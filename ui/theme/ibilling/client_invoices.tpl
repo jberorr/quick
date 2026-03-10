@@ -60,9 +60,10 @@
                         {*{/if}*}
                         {*</td>*}
                         <td class="text-right">
-                            <a target="_blank" href="{$_url}client/iview/{$ds['id']}/token_{$ds['vtoken']}/" class="btn btn-primary btn-xs"><i class="fa fa-check"></i> </a>
-                            <a href="{$_url}client/ipdf/{$ds['id']}/token_{$ds['vtoken']}/dl/" class="btn btn-primary btn-xs"><i class="fa fa-file-pdf-o"></i> </a>
-                            <a target="_blank" href="{$_url}iview/print/{$ds['id']}/token_{$ds['vtoken']}/" class="btn btn-primary btn-xs"><i class="fa fa-print"></i> </a>
+                            <a target="_blank" href="{$_url}client/iview/{$ds['id']}/token_{$ds['vtoken']}/" class="btn btn-primary btn-xs" title="View Invoice"><i class="fa fa-eye"></i> </a>
+                            <a target="_blank" href="{$_url}client/ipdf/{$ds['id']}/token_{$ds['vtoken']}/inline/" class="btn btn-success btn-xs" title="View PDF"><i class="fa fa-file-pdf-o"></i> </a>
+                            <a href="{$_url}client/ipdf/{$ds['id']}/token_{$ds['vtoken']}/dl/" class="btn btn-info btn-xs" title="Download PDF"><i class="fa fa-download"></i> </a>
+                            <a target="_blank" href="{$_url}iview/print/{$ds['id']}/token_{$ds['vtoken']}/" class="btn btn-warning btn-xs" title="Print"><i class="fa fa-print"></i> </a>
 
                         </td>
                     </tr>

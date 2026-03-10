@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2023-12-14 02:09:00
+/* Smarty version 3.1.33, created on 2026-01-06 22:06:25
   from 'C:\xampp\htdocs\quickpcservice.in\ui\theme\ibilling\sections\nav.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_657a1664b06e50_54722866',
+  'unifunc' => 'content_695d3a09dc12a3_30612676',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'de598ec64a4afb2651116887e78335dfa7551c02' => 
     array (
       0 => 'C:\\xampp\\htdocs\\quickpcservice.in\\ui\\theme\\ibilling\\sections\\nav.tpl',
-      1 => 1551384836,
+      1 => 1677483173,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_657a1664b06e50_54722866 (Smarty_Internal_Template $_smarty_tpl) {
+function content_695d3a09dc12a3_30612676 (Smarty_Internal_Template $_smarty_tpl) {
 ?><ul class="nav" id="side-menu">
 
     <li class="nav-header">

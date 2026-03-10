@@ -206,13 +206,20 @@ switch ($action) {
 
     case 'ipdf':
 
+        // Start output buffering to prevent any accidental output before PDF headers
+        ob_start();
+        
+        // Trigger event (buffered output will be discarded)
         Event::trigger('client/ipdf/');
-
+        
+        // Clear any buffered output to ensure clean headers
+        ob_end_clean();
 
         $id  = $routes['2'];
         $token = $routes['3'];
+        $pdf_type = isset($routes['4']) ? $routes['4'] : 'inline';
 
-        Invoice::pdf($id,'inline',$token);
+        Invoice::pdf($id,$pdf_type,$token);
 
 //        $d = ORM::for_table('sys_invoices')->find_one($id);
 //        if($d){

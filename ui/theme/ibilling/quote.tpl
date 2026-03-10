@@ -180,7 +180,7 @@
                                             {$_c['caddress']}
                                         </address>
                                         <div class="ib">
-                                            <img src="{$app_url}application/storage/system/logo.png" alt="Logo">
+                                            <img class="logo-responsive" src="{$app_url}application/storage/system/logo.png" alt="{$_c['CompanyName']} Logo">
                                         </div>
                                         <p class="mb-none mt-lg">
                                             <span class="text-dark">{$_L['Date Created']}:</span>

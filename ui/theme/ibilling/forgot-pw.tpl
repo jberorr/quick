@@ -22,7 +22,7 @@
     <div class="sign-in-wrapper">
         <div class="sign-in-inner">
             <div class="login-brand text-center">
-                <img class="logo" src="{$app_url}application/storage/system/logo.png" alt="Logo">
+                <img class="logo-responsive-login" src="{$app_url}application/storage/system/logo.png" alt="{$_c['CompanyName']} Logo">
 
             </div>
             {if isset($notify)}

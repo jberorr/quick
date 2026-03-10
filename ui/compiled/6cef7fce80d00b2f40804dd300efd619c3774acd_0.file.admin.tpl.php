@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2023-12-14 02:09:00
+/* Smarty version 3.1.33, created on 2026-01-06 22:06:25
   from 'C:\xampp\htdocs\quickpcservice.in\ui\theme\ibilling\layouts\admin.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_657a166463df16_36987207',
+  'unifunc' => 'content_695d3a096a91e1_70255771',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '6cef7fce80d00b2f40804dd300efd619c3774acd' => 
     array (
       0 => 'C:\\xampp\\htdocs\\quickpcservice.in\\ui\\theme\\ibilling\\layouts\\admin.tpl',
-      1 => 1551384836,
+      1 => 1767717256,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_657a166463df16_36987207 (Smarty_Internal_Template $_smarty_tpl) {
+function content_695d3a096a91e1_70255771 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, false);
 ?>
@@ -29,10 +29,10 @@ $_smarty_tpl->inheritance->init($_smarty_tpl, false);
 <!--
 Dynamically Auto Generated Page - Do Not Edit
 ================================================================
-Software Name: iBilling - CRM, Accounting and Invoicing Software
-Author: CloudOneX
-Website: https://www.cloudonex.com/
-License: You must have a valid license in order to legally use this Software.
+Software Name: Quick PC Service Management System
+Author: Quick PC Service
+Website: https://www.quickpcservice.in/
+License: All Rights Reserved.
 ========================================================================================================================
 -->
 
@@ -71,6 +71,10 @@ ui/lib/css/ibilling.css" rel="stylesheet">
     <link href="<?php echo $_smarty_tpl->tpl_vars['_theme']->value;?>
 /css/<?php echo $_smarty_tpl->tpl_vars['_c']->value['nstyle'];?>
 .css" rel="stylesheet">
+
+    <!-- Modern UI Enhancements -->
+    <link href="<?php echo $_smarty_tpl->tpl_vars['_theme']->value;?>
+/css/modern-enhancements.css" rel="stylesheet">
 
     <?php
 $_from = $_smarty_tpl->smarty->ext->_foreach->init($_smarty_tpl, $_smarty_tpl->tpl_vars['plugin_ui_header_admin']->value, 'plugin_ui_header_add');
@@ -249,7 +253,7 @@ logout/"><?php echo $_smarty_tpl->tpl_vars['_L']->value['Logout'];?>
 <?php }?>
 
                 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_450325032657a1664634e85_31371824', "content");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_41884749695d3a096a0cc8_35636076', "content");
 ?>
 
 
@@ -431,7 +435,11 @@ settings/set_color/dark/"><span class="dark"></span></a></li>
 ui/lib/ibilling.js"><?php echo '</script'; ?>
 >
 
-
+<!-- Modern UI Enhancements -->
+<?php echo '<script'; ?>
+ src="<?php echo $_smarty_tpl->tpl_vars['_theme']->value;?>
+/js/modern-enhancements.js"><?php echo '</script'; ?>
+>
 
 <?php if (isset($_smarty_tpl->tpl_vars['xfooter']->value)) {?>
     <?php echo $_smarty_tpl->tpl_vars['xfooter']->value;?>
@@ -439,7 +447,7 @@ ui/lib/ibilling.js"><?php echo '</script'; ?>
 <?php }?>
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_368167633657a166463cb84_38021536', 'script');
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_1916075662695d3a096a7f18_80743440', 'script');
 ?>
 
 
@@ -466,12 +474,12 @@ $_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_368167633657a16646
 </html>
 <?php }
 /* {block "content"} */
-class Block_450325032657a1664634e85_31371824 extends Smarty_Internal_Block
+class Block_41884749695d3a096a0cc8_35636076 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'content' => 
   array (
-    0 => 'Block_450325032657a1664634e85_31371824',
+    0 => 'Block_41884749695d3a096a0cc8_35636076',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -479,12 +487,12 @@ public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
 }
 /* {/block "content"} */
 /* {block 'script'} */
-class Block_368167633657a166463cb84_38021536 extends Smarty_Internal_Block
+class Block_1916075662695d3a096a7f18_80743440 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'script' => 
   array (
-    0 => 'Block_368167633657a166463cb84_38021536',
+    0 => 'Block_1916075662695d3a096a7f18_80743440',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {

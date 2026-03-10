@@ -59,7 +59,7 @@
 
 
 <div class="container" id="registration-form">
-    <a href="{$_url}client/login/" class="login-logo"><img src="{$app_url}application/storage/system/logo.png"></a>
+    <a href="{$_url}client/login/" class="login-logo"><img class="logo-responsive-login" src="{$app_url}application/storage/system/logo.png" alt="{$_c['CompanyName']} Logo"></a>
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
             <form method="post" action="{$_url}client/register_post/" id="iform">

@@ -2,12 +2,12 @@
 // *************************************************************************
 // *                                                                       *
 // * iBilling -  Accounting, Billing Software                              *
-// * Copyright (c) CloudOnex. All Rights Reserved                      *
+// * Copyright (c) Quick PC Service. All Rights Reserved              *
 // *                                                                       *
 // *************************************************************************
 // *                                                                       *
-// * Email: sadiasharmin3139@gmail.com                                                *
-// * Website: http://www.cloudonex.com                                  *
+// * Email: support@quickpcservice.in                                    *
+// * Website: https://www.quickpcservice.in                          *
 // *                                                                       *
 // *************************************************************************
 // *                                                                       *

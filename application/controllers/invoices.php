@@ -422,7 +422,7 @@ if($config['i_driver'] == 'default'){
         if ($msg == '') {
 
             $qty = $_POST['qty'];
-            if(isset($_POST['taxed'])){
+            if(isset($_POST['taxed'])){'''
                 $taxed = $_POST['taxed'];
             }
             else{
@@ -913,7 +913,7 @@ $(".cdelete").click(function (e) {
             $qty = $_POST['qty'];
 
 
-            if(isset($_POST['taxed'])){
+            if(isset($_POST['taxed'])){'''
                 $taxed = $_POST['taxed'];
 
             }
@@ -1219,193 +1219,36 @@ $(".cdelete").click(function (e) {
         break;
 
     case 'pdf':
+    // Check if the user is authenticated
+    if (!isset($user) || !$user->id) {
+        // If not authenticated, handle the error (e.g., redirect to login)
+        header("HTTP/1.1 401 Unauthorized");
+        exit("<h2>Access Denied: Please log in to view this content.</h2>");
+    }
 
-        Event::trigger('invoices/pdf/');
+    // Get the invoice ID from the route and validate it
+    $id = isset($routes['2']) ? (int)$routes['2'] : 0;
+    if (empty($id)) {
+        header("HTTP/1.1 400 Bad Request");
+        exit("<h2>Invalid request: Invoice ID is missing.</h2>");
+    }
 
+    // Determine the output type (download or inline)
+    $output_type = isset($routes['3']) && $routes['3'] === 'dl' ? 'D' : 'I';
 
-        $id = $routes['2'];
+    try {
+        // Generate the PDF
+        Invoice::pdf($id, $output_type);
+    } catch (Exception $e) {
+        // Log the error for debugging
+        error_log("PDF generation failed for invoice #$id: " . $e->getMessage());
 
+        // Display a user-friendly error message
+        header("HTTP/1.1 500 Internal Server Error");
+        exit("<h2>Oops! Something went wrong while generating the PDF. Please try again later.</h2>");
+    }
 
-        $d = ORM::for_table('sys_invoices')->find_one($id);
-        if ($d) {
-
-            //find all activity for this user
-            $items = ORM::for_table('sys_invoiceitems')->where('invoiceid', $id)->order_by_asc('id')->find_many();
-
-            $trs_c = ORM::for_table('sys_transactions')->where('iid', $id)->count();
-
-            $trs = ORM::for_table('sys_transactions')->where('iid', $id)->order_by_desc('id')->find_many();
-
-//find the user
-            $a = ORM::for_table('crm_accounts')->find_one($d['userid']);
-            $i_credit = $d['credit'];
-            $i_due = '0.00';
-            $i_total = $d['total'];
-            if($d['credit'] != '0.00'){
-                $i_due = $i_total - $i_credit;
-            }
-            else{
-                $i_due =  $d['total'];
-            }
-
-            $i_due = number_format($i_due,2,$config['dec_point'],$config['thousands_sep']);
-            $cf = ORM::for_table('crm_customfields')->where('showinvoice', 'Yes')->order_by_asc('id')->find_many();
-//            ob_start();
-//            require 'application/lib/invoices/pdf-default.php';
-//            $html = ob_get_contents();
-//            ob_end_clean();
-//            echo $html;
-//            exit;
-//            require('application/lib/tcpdf/config/lang/eng.php');
-//            require('application/lib/tcpdf/tcpdf.php');
-//            // create new PDF document
-//            $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-//
-//// set document information
-//            $pdf->SetCreator('application');
-//            $pdf->SetAuthor('application.com');
-//            $pdf->SetTitle('invoice titla');
-//            $pdf->SetSubject('invoice subject');
-//
-//            $pdf->SetPrintHeader(false);
-//// set default header data
-//            //   $pdf->SetHeaderData('', '', $title, "Generated on ".date('d/m/Y')." \nby ".$aadmin);
-//
-//// set header and footer fonts
-//            //   $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-//            //   $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-////$pdf->SetFont('freesans', '', 10);
-//// set default monospaced font
-//            //   $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-//
-////set margins
-////            $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-////        //    $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-////         //   $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-////
-//////set auto page breaks
-////            $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-////
-//////set image scale factor
-////            $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-//
-////set some language-dependent strings
-//            //  $pdf->setLanguageArray();
-//
-//// ---------------------------------------------------------
-//
-//// set font
-//            $pdf->AddPage();
-//            require 'application/lib/invoices/pdf-x1.php';
-//
-//            // $pdf->writeHTML($html, true, false, true, false, '');
-//
-//// - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-//
-//// reset pointer to the last page
-//            //   $pdf->lastPage();
-//
-//// ---------------------------------------------------------
-//
-////Close and output PDF document
-//            if (isset($routes['3']) AND ($routes['3'] == 'dl')) {
-//                $pdf->Output(date('Y-m-d') . _raid(4) . '.pdf', 'D'); # D
-//            } else {
-//                $pdf->Output(date('Y-m-d') . _raid(4) . '.pdf', 'I'); # D
-//            }
-//
-//        } else {
-//            r2(U . 'customers/list', 'e', $_L['Account_Not_Found']);
-//        }
-
-
-            if($d['cn'] != ''){
-                $dispid = $d['cn'];
-            }
-            else{
-                $dispid = $d['id'];
-            }
-
-            $in = $d['invoicenum'].$dispid;
-
-            define('_MPDF_PATH','application/lib/mpdf/');
-
-            require('application/lib/mpdf/mpdf.php');
-
-            $pdf_c = '';
-            $ib_w_font = 'dejavusanscondensed';
-            if($config['pdf_font'] == 'default'){
-                $pdf_c = 'c';
-                $ib_w_font = 'Helvetica';
-            }
-
-            $mpdf=new mPDF($pdf_c,'A4','','',20,15,15,25,10,10);
-            $mpdf->SetProtection(array('print'));
-            $mpdf->SetTitle($config['CompanyName'].' Invoice');
-            $mpdf->SetAuthor($config['CompanyName']);
-            $mpdf->SetWatermarkText(ib_lan_get_line($d['status']));
-            $mpdf->showWatermarkText = true;
-            $mpdf->watermark_font = $ib_w_font;
-            $mpdf->watermarkTextAlpha = 0.1;
-            $mpdf->SetDisplayMode('fullpage');
-
-            if($config['pdf_font'] == 'AdobeCJK'){
-                $mpdf->useAdobeCJK = true;
-                $mpdf->autoScriptToLang = true;
-                $mpdf->autoLangToFont = true;
-            }
-
-            Event::trigger('invoices/before_pdf_render/');
-
-            ob_start();
-
-            require 'application/lib/invoices/pdf-x2.php';
-
-            $html = ob_get_contents();
-
-
-            ob_end_clean();
-
-            $mpdf->WriteHTML($html);
-
-            $pdf_return = 'inline';
-
-            if (isset($routes[3])) {
-
-                $r_type = $routes[3];
-
-
-            }
-            else{
-                $r_type = 'inline';
-            }
-
-            if ($r_type == 'dl') {
-                $mpdf->Output(date('Y-m-d') . _raid(4) . '.pdf', 'D'); # D
-            }
-
-            elseif ($r_type == 'inline') {
-                $mpdf->Output(date('Y-m-d') . _raid(4) . '.pdf', 'I'); # D
-            }
-
-            elseif ($r_type == 'store') {
-
-                $mpdf->Output('application/storage/temp/Invoice_'.$in.'.pdf', 'F'); # D
-
-            }
-
-            else {
-                $mpdf->Output(date('Y-m-d') . _raid(4) . '.pdf', 'I'); # D
-            }
-
-
-
-
-        }
-
-
-
-        break;
+    break;
 
     case 'markpaid':
 

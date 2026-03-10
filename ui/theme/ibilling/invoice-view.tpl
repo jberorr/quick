@@ -67,8 +67,8 @@
                                 <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a href="{$_url}client/ipdf/{$d['id']}/token_{$d['vtoken']}/view/" target="_blank">{$_L['View PDF']}</a></li>
-                                <li><a href="{$_url}client/ipdf/{$d['id']}/token_{$d['vtoken']}/dl/">{$_L['Download PDF']}</a></li>
+                                <li><a href="{$_url}invoices/pdf/{$d['id']}/inline/" target="_blank" title="View PDF in new tab">{$_L['View PDF']}</a></li>
+                                <li><a href="{$_url}invoices/pdf/{$d['id']}/dl/" title="Download PDF to computer">{$_L['Download PDF']}</a></li>
                             </ul>
                         </div>
                         <a href="{$_url}iview/print/{$d['id']}/token_{$d['vtoken']}" target="_blank" class="btn btn-primary  btn-sm"><i class="fa fa-print"></i> {$_L['Print']}</a>
@@ -100,7 +100,7 @@
                                         {$_c['caddress']}
                                     </address>
                                     <div class="ib">
-                                        <img src="{$app_url}application/storage/system/logo.png" alt="Logo">
+                                        <img class="logo-responsive" src="{$app_url}application/storage/system/logo.png" alt="{$_c['CompanyName']} Logo">
                                     </div>
                                 </div>
                             </div>

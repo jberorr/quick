@@ -2699,8 +2699,158 @@ white theme  //Razib
 }
 
 .logo {
-
     margin: 5px;
+}
+
+/* Base Responsive Logo Styles */
+.logo-responsive {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Header Logo Base Styles - Navbar Logo */
+.logo-responsive-header {
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    float: left !important;
+    height: 40px !important;
+    max-height: 40px !important;
+    line-height: 40px !important;
+    max-width: 150px !important;
+    width: 150px !important;
+    overflow: hidden !important;
+    object-fit: contain !important;
+}
+
+/* Ensure logo image doesn't overflow - STRICT CONSTRAINTS */
+.logo-responsive-header,
+img.logo-responsive-header,
+.navbar .logo-responsive-header,
+.navbar img.logo-responsive-header {
+    max-width: 150px !important;
+    max-height: 40px !important;
+    width: 150px !important;
+    height: 40px !important;
+    display: inline-block !important;
+}
+
+img.logo-responsive-header {
+    max-width: 150px !important;
+    width: 150px !important;
+    max-height: 40px !important;
+    height: 40px !important;
+    object-fit: contain !important;
+}
+
+/* Login Logo Base Styles */
+.logo-responsive-login {
+    display: block;
+    margin: 0 auto 20px;
+    max-width: 100%;
+}
+
+/* Mobile - Extra small devices (< 576px) */
+@media (max-width: 575px) {
+    .logo-responsive {
+        max-width: 120px;
+        height: auto;
+    }
+    .logo-responsive-header,
+    img.logo-responsive-header {
+        height: 28px !important;
+        max-height: 28px !important;
+        width: 80px !important;
+        max-width: 80px !important;
+        object-fit: contain !important;
+    }
+    .logo-responsive-login {
+        max-width: 140px;
+        height: auto;
+    }
+}
+
+/* Tablet - Small devices (576px to 767px) */
+@media (min-width: 576px) and (max-width: 767px) {
+    .logo-responsive {
+        max-width: 140px;
+        height: auto;
+    }
+    .logo-responsive-header,
+    img.logo-responsive-header {
+        height: 32px !important;
+        max-height: 32px !important;
+        width: 100px !important;
+        max-width: 100px !important;
+        object-fit: contain !important;
+    }
+    .logo-responsive-login {
+        max-width: 160px;
+        height: auto;
+    }
+}
+
+/* Tablet - Medium devices (768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+    .logo-responsive {
+        max-width: 160px;
+        height: auto;
+    }
+    .logo-responsive-header,
+    img.logo-responsive-header {
+        height: 36px !important;
+        max-height: 36px !important;
+        width: 120px !important;
+        max-width: 120px !important;
+        object-fit: contain !important;
+    }
+    .logo-responsive-login {
+        max-width: 180px;
+        height: auto;
+    }
+}
+
+/* Desktop - Large devices (992px to 1199px) */
+@media (min-width: 992px) and (max-width: 1199px) {
+    .logo-responsive {
+        max-width: 180px;
+        height: auto;
+    }
+    .logo-responsive-header,
+    img.logo-responsive-header {
+        height: 38px !important;
+        max-height: 38px !important;
+        width: 130px !important;
+        max-width: 130px !important;
+        object-fit: contain !important;
+    }
+    .logo-responsive-login {
+        max-width: 200px;
+        height: auto;
+    }
+}
+
+/* Desktop - Extra large devices (>= 1200px) */
+@media (min-width: 1200px) {
+    .logo-responsive {
+        max-width: 200px;
+        height: auto;
+    }
+    .logo-responsive-header,
+    img.logo-responsive-header {
+        height: 40px !important;
+        max-height: 40px !important;
+        width: 150px !important;
+        max-width: 150px !important;
+        object-fit: contain !important;
+    }
+    .logo-responsive-login {
+        max-width: 230px;
+        height: auto;
+    }
 }
 
 .nav > li.active, .nav > li:focus {

@@ -31,7 +31,7 @@
                 </div>
                 <div class="ibox-content">
 
-                    <img class="logo" src="{$app_url}application/storage/system/logo.png" alt="Logo">
+                    <img class="logo-responsive" src="{$app_url}application/storage/system/logo.png" alt="{$_c['CompanyName']} Logo Preview">
                     <br><br>
 
                     <form role="form" name="logo" enctype="multipart/form-data" method="post"

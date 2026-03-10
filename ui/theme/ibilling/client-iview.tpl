@@ -92,7 +92,7 @@
                                 {$_c['caddress']}
                             </address>
                             <div class="ib">
-                                <img src="{$app_url}application/storage/system/logo.png" alt="Logo">
+                                <img class="logo-responsive" src="{$app_url}application/storage/system/logo.png" alt="{$_c['CompanyName']} Logo">
                             </div>
                         </div>
                     </div>
@@ -297,8 +297,8 @@
 
                 <br>
                 <a href="{$_url}client/dashboard/" class="btn btn-primary ml-sm no-shadow no-border"><i class="fa fa-long-arrow-left"></i> {$_L['Back to Client Area']}</a>
-                <a href="{$_url}client/ipdf/{$d['id']}/token_{$d['vtoken']}/dl/" class="btn btn-primary buttons-pdf ml-sm"><i class="fa fa-file-pdf-o"></i> {$_L['Download PDF']}</a>
-                <a href="{$_url}client/ipdf/{$d['id']}/token_{$d['vtoken']}/view/" class="btn btn-primary buttons-excel ml-sm"><i class="fa fa-file-text-o"></i> {$_L['View PDF']}</a>
+                <a href="{$_url}client/ipdf/{$d['id']}/token_{$d['vtoken']}/dl/" class="btn btn-primary buttons-pdf ml-sm" title="Download PDF to your computer"><i class="fa fa-download"></i> {$_L['Download PDF']}</a>
+                <a href="{$_url}client/ipdf/{$d['id']}/token_{$d['vtoken']}/inline/" target="_blank" class="btn btn-primary buttons-excel ml-sm" title="View PDF in new tab"><i class="fa fa-file-pdf-o"></i> {$_L['View PDF']}</a>
                 <a href="{$_url}iview/print/{$d['id']}/token_{$d['vtoken']}" target="_blank" class="btn btn-primary buttons-print ml-sm"><i class="fa fa-print"></i> {$_L['Printable Version']}</a>
             </div>
         </div>
@@ -346,7 +346,7 @@
 
 
 
-<script src="{$app_url}ui/lib/cloudonex.js"></script>
+<!-- CloudOneX library removed -->
 
 {if $_c['language'] neq 'en'}
 

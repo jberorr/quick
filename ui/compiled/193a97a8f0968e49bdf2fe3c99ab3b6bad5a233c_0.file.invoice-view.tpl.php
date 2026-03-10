@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2023-12-14 02:12:11
+/* Smarty version 3.1.33, created on 2026-01-06 22:29:38
   from 'C:\xampp\htdocs\quickpcservice.in\ui\theme\ibilling\invoice-view.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_657a172346feb3_17317848',
+  'unifunc' => 'content_695d3f7a288c44_78988045',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '193a97a8f0968e49bdf2fe3c99ab3b6bad5a233c' => 
     array (
       0 => 'C:\\xampp\\htdocs\\quickpcservice.in\\ui\\theme\\ibilling\\invoice-view.tpl',
-      1 => 1551384836,
+      1 => 1767718751,
       2 => 'file',
     ),
   ),
@@ -20,23 +20,23 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_657a172346feb3_17317848 (Smarty_Internal_Template $_smarty_tpl) {
+function content_695d3f7a288c44_78988045 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_loadInheritance();
 $_smarty_tpl->inheritance->init($_smarty_tpl, true);
 ?>
 
 
 <?php 
-$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_1414164880657a1723422863_33991880', "content");
+$_smarty_tpl->inheritance->instanceBlock($_smarty_tpl, 'Block_1498921736695d3f7a254082_97531096', "content");
 $_smarty_tpl->inheritance->endChild($_smarty_tpl, "layouts/admin.tpl");
 }
 /* {block "content"} */
-class Block_1414164880657a1723422863_33991880 extends Smarty_Internal_Block
+class Block_1498921736695d3f7a254082_97531096 extends Smarty_Internal_Block
 {
 public $subBlocks = array (
   'content' => 
   array (
-    0 => 'Block_1414164880657a1723422863_33991880',
+    0 => 'Block_1498921736695d3f7a254082_97531096',
   ),
 );
 public function callBlock(Smarty_Internal_Template $_smarty_tpl) {
@@ -138,14 +138,12 @@ invoices/edit/<?php echo $_smarty_tpl->tpl_vars['d']->value['id'];?>
                             </button>
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="<?php echo $_smarty_tpl->tpl_vars['_url']->value;?>
-client/ipdf/<?php echo $_smarty_tpl->tpl_vars['d']->value['id'];?>
-/token_<?php echo $_smarty_tpl->tpl_vars['d']->value['vtoken'];?>
-/view/" target="_blank"><?php echo $_smarty_tpl->tpl_vars['_L']->value['View PDF'];?>
+invoices/pdf/<?php echo $_smarty_tpl->tpl_vars['d']->value['id'];?>
+/inline/" target="_blank" title="View PDF in new tab"><?php echo $_smarty_tpl->tpl_vars['_L']->value['View PDF'];?>
 </a></li>
                                 <li><a href="<?php echo $_smarty_tpl->tpl_vars['_url']->value;?>
-client/ipdf/<?php echo $_smarty_tpl->tpl_vars['d']->value['id'];?>
-/token_<?php echo $_smarty_tpl->tpl_vars['d']->value['vtoken'];?>
-/dl/"><?php echo $_smarty_tpl->tpl_vars['_L']->value['Download PDF'];?>
+invoices/pdf/<?php echo $_smarty_tpl->tpl_vars['d']->value['id'];?>
+/dl/" title="Download PDF to computer"><?php echo $_smarty_tpl->tpl_vars['_L']->value['Download PDF'];?>
 </a></li>
                             </ul>
                         </div>

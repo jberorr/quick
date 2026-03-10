@@ -1,6 +1,6 @@
 <?php
 
-// Copyright Sadia Sharmin
+// Quick PC Service Management System
 
 
 

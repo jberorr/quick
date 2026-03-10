@@ -1,28 +1,15 @@
 <?php
 // *************************************************************************
-// *                                                                       *
-// * iBilling -  Accounting, Billing Software                              *
-// * Copyright (c) Sadia Sharmin. All Rights Reserved                      *
-// *                                                                       *
-// *************************************************************************
-// *                                                                       *
-// * Email: sadiasharmin3139@gmail.com                                                *
-// * Website: http://www.sadiasharmin.com                                  *
-// *                                                                       *
-// *************************************************************************
-// *                                                                       *
-// * This software is furnished under a license and may be used and copied *
-// * only  in  accordance  with  the  terms  of such  license and with the *
-// * inclusion of the above copyright notice.                              *
-// * If you Purchased from Codecanyon, Please read the full License from   *
-// * here- http://codecanyon.net/licenses/standard                         *
-// *                                                                       *
+// * Quick PC Service Management System                                   *
+// * Installation Wizard                                                  *
 // *************************************************************************
 require ('application_installer_config.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title><?php echo $app_name; ?> Installer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo htmlspecialchars($app_name); ?> Installer</title>
     <link rel="shortcut icon" type="image/x-icon" href="../storage/icon/favicon.ico">
     <link href="../../ui/theme/ibilling/css/bootstrap.min.css" rel="stylesheet">
     <link href="../../ui/theme/ibilling/lib/fa/css/font-awesome.min.css" rel="stylesheet">
@@ -34,6 +21,7 @@ require ('application_installer_config.php'); ?>
     <link href="../../ui/theme/ibilling/css/custom.css" rel="stylesheet">
     <link href="../../ui/lib/icons/css/ibilling_icons.css" rel="stylesheet">
     <link href="../../ui/theme/ibilling/css/material.css" rel="stylesheet">
+    <link href="../../ui/theme/ibilling/css/responsive.css" rel="stylesheet">
     <link type='text/css' href='style.css' rel='stylesheet'/>
 
 </head>
@@ -41,7 +29,7 @@ require ('application_installer_config.php'); ?>
 <div id='main-container'>
     <div class='header'>
         <div class="header-box wrapper">
-            <div class="hd-logo"><a href="#"><img src="../storage/system/logo.png" alt="Logo"/></a></div>
+            <div class="hd-logo"><a href="#"><img src="../storage/system/logo.png" alt="Quick PC Service Logo"/></a></div>
         </div>
 
     </div>

@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 3.1.33, created on 2023-12-14 02:08:32
+/* Smarty version 3.1.33, created on 2026-01-06 22:16:02
   from 'C:\xampp\htdocs\quickpcservice.in\ui\theme\ibilling\login.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '3.1.33',
-  'unifunc' => 'content_657a1648a24da9_06636205',
+  'unifunc' => 'content_695d3c4a0d3b04_72360423',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '283f072ae7d18f0d3b29d9cf5fb46312eb9ca573' => 
     array (
       0 => 'C:\\xampp\\htdocs\\quickpcservice.in\\ui\\theme\\ibilling\\login.tpl',
-      1 => 1551384836,
+      1 => 1677483173,
       2 => 'file',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_657a1648a24da9_06636205 (Smarty_Internal_Template $_smarty_tpl) {
+function content_695d3c4a0d3b04_72360423 (Smarty_Internal_Template $_smarty_tpl) {
 ?><!DOCTYPE html>
 <html lang="en">
 <head>

@@ -4,13 +4,10 @@
 <!--
 Dynamically Auto Generated Page - Do Not Edit
 ================================================================
-Software Name: iBilling - CRM, Accounting and Invoicing Software
+Software Name: Quick PC Service Management System
 Version: 4.5.2.0
-Author: Sadia Sharmin
-Website: http://www.ibilling.io/
-Contact: sadiasharmin3139@gmail.com
-Purchase: http://codecanyon.net/item/ibilling-accounting-and-billing-software/11021678?ref=SadiaSharmin
-License: You must have a valid license purchased only from envato(the above link) in order to legally use this Software.
+Powered by: Quick PC Service
+Website: {$_c['CompanyWebsite']}
 ========================================================================================================================
 -->
 
@@ -39,6 +36,9 @@ License: You must have a valid license purchased only from envato(the above link
     <link href="{$app_url}ui/lib/css/ibilling.css" rel="stylesheet">
 
     <link href="{$_theme}/css/{$_c['nstyle']}.css" rel="stylesheet">
+    
+    <!-- Responsive CSS for mobile and all devices -->
+    <link href="{$_theme}/css/responsive.css" rel="stylesheet">
 
 {foreach $plugin_ui_header_admin as $plugin_ui_header_add}
     {$plugin_ui_header_add}
@@ -73,7 +73,7 @@ License: You must have a valid license purchased only from envato(the above link
             <div class="row border-bottom">
                 <nav class="navbar navbar-fixed-top white-bg" role="navigation" style="margin-bottom: 0">
 
-                    <img class="logo" style="max-height: 40px; width: auto;" src="{$app_url}application/storage/system/logo.png" alt="Logo">
+                    <img class="logo-responsive-header" src="{$app_url}application/storage/system/logo.png" alt="{$_c['CompanyName']} Logo" style="width: 150px !important; height: 40px !important; max-width: 150px !important; max-height: 40px !important; object-fit: contain; display: inline-block;">
 
                     <div class="navbar-header">
                         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary btn-flat" href="#"><i class="fa fa-dedent"></i> </a>
@@ -131,10 +131,8 @@ License: You must have a valid license purchased only from envato(the above link
 
                             <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
 
-                                {if $user['img'] eq 'gravatar'}
-                                    <img src="http://www.gravatar.com/avatar/{($user['username'])|md5}?s=200" class="img-circle" alt="{$user['fullname']}">
-                                {elseif $user['img'] eq ''}
-                                    <img src="{$app_url}ui/lib/imgs/default-user-avatar.png" alt="">
+                                {if $user['img'] eq '' || $user['img'] eq 'gravatar'}
+                                    <img src="{$app_url}ui/lib/imgs/default-user-avatar.png" class="img-circle" alt="{$user['fullname']}">
                                 {else}
                                     <img src="{$user['img']}" class="img-circle" alt="{$user['fullname']}">
                                 {/if}

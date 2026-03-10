@@ -7,7 +7,7 @@
         {else}
         <div class="footer">
             <div>
-                <strong>{$_L['Copyright']}</strong> &copy; {$_c['CompanyName']}
+                <strong>{$_L['Copyright']}</strong> &copy; {$_c['CompanyName']} - All Rights Reserved
             </div>
         </div>
     {/if}
