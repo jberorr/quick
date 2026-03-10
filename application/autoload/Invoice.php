@@ -256,29 +256,6 @@ Class Invoice
         // Prepare filename
         $filename = 'Invoice_' . preg_replace('/[^a-zA-Z0-9]/', '_', $d['invoicenum'] . $dispid) . '_' . date('Ymd') . '.pdf';
 
-        // Send headers FIRST before any output
-        header('Content-Type: application/pdf', true);
-        header('Content-Transfer-Encoding: binary', true);
-        header('Accept-Ranges: bytes', true);
-        
-        if ($r_type == 'dl') {
-            // Download - force browser to download
-            header('Content-Disposition: attachment; filename="' . $filename . '"', true);
-            $output_type = 'D';
-        } elseif ($r_type == 'store') {
-            // Store to file/temp - we'll set temp dir path for mPDF to store
-            $output_type = 'F';
-        } else {
-            // View in browser (default)
-            header('Content-Disposition: inline; filename="' . $filename . '"', true);
-            $output_type = 'I';
-        }
-        
-        header('Cache-Control: no-cache, no-store, must-revalidate', true);
-        header('Pragma: no-cache', true);
-        header('Expires: 0', true);
-        header('Connection: close', true);
-
         // Generate PDF using mPDF from vendor directory
         try {
             // Use absolute path to ensure vendor autoload is found
@@ -305,6 +282,27 @@ Class Invoice
             $mpdf->WriteHTML($html);
             
             // Output PDF based on type
+            if ($r_type == 'dl') {
+                // Download - force browser to download
+                $output_type = 'D';
+            } elseif ($r_type == 'store') {
+                // Store to file/temp - we'll set temp dir path for mPDF to store
+                $output_type = 'F';
+            } else {
+                // View in browser (default)
+                $output_type = 'I';
+            }
+
+            // Send headers FIRST before any output
+            header('Content-Type: application/pdf', true);
+            header('Content-Transfer-Encoding: binary', true);
+            header('Accept-Ranges: bytes', true);
+            header('Content-Disposition: inline; filename="' . $filename . '"', true);
+            header('Cache-Control: no-cache, no-store, must-revalidate', true);
+            header('Pragma: no-cache', true);
+            header('Expires: 0', true);
+            header('Connection: close', true);
+
             if ($output_type == 'F') {
                 // Store to file
                 $store_path = 'storage/temp/' . $filename;
@@ -323,7 +321,6 @@ Class Invoice
             
             // Send error headers
             header('Content-Type: text/html; charset=utf-8', true);
-            header('Content-Disposition: inline', true);
             
             // Log the error
             error_log('PDF Generation Error for Invoice ' . $id . ': ' . $e->getMessage());
