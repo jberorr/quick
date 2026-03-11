@@ -20,4 +20,4 @@ jobs:
 
       - name: Deploy files
         run: |
-          scp -r * jberorri@148.113.35.192:/home/jberorri/invoice.quickpcservice.in
+          scp -r * jberorri@jberorr.in/home/jberorri/invoice.quickpcservice.in
