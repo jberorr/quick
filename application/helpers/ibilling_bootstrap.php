@@ -8,8 +8,8 @@ if(!defined('APP_RUN')) exit('No direct access allowed');
 
 session_start();
 
-use Sabre\Event\EventEmitter;
-$app = new EventEmitter();
+// use Sabre\Event\EventEmitter;
+// $app = new EventEmitter();
 
 function r2($to, $ntype = 'e', $msg = '')
 {
@@ -348,9 +348,9 @@ require('application/helpers/ibilling_plugged.php');
 
 // routing started
 
-Event::trigger('routing_started');
+// Event::trigger('routing_started');
 
-$app->emit('routing_started',[&$_L,&$config]);
+// $app->emit('routing_started',[&$_L,&$config]);
 
 $ui->assign('_c', $config);
 $ui->assign('config', $config);
