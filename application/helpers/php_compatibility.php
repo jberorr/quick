@@ -202,7 +202,7 @@ if (!function_exists('get_db_connection')) {
 /**
  * Disable deprecated error reporting for newer PHP versions
  */
-if (version_compare(PHP_VERSION, '7.2.0') >= 0) {
-    error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
-}
+//if (version_compare(PHP_VERSION, '7.2.0') >= 0) {
+//    error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
+//}
 ?>
