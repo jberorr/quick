@@ -43,9 +43,9 @@ if ($_app_stage == 'Dev') {
     ini_set('display_errors', 1);
     ini_set('display_startup_errors', 1);
     error_reporting(-1);
-    $whoops = new \Whoops\Run;
-    $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
-    $whoops->register();
+    // $whoops = new \Whoops\Run;
+    // $whoops->pushHandler(new \Whoops\Handler\PrettyPageHandler);
+    // $whoops->register();
 } else {
     error_reporting(0);
 }
