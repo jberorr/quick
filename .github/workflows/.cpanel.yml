@@ -15,10 +15,10 @@ jobs:
       - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          printf "%s" "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H jberorr.in >> ~/.ssh/known_hosts
 
-      - name: Deploy
+      - name: Deploy files
         run: |
           scp -r * jberorri@jberorr.in:/home/jberorri/invoice.quickpcservice.in
