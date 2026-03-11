@@ -8,16 +8,17 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v3
 
-      - name: Invoice
+      - name: Setup SSH
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H your-server.com >> ~/.ssh/known_hosts
+          ssh-keyscan -H jberorr.in >> ~/.ssh/known_hosts
 
-      - name: Deploy files
+      - name: Deploy
         run: |
-          ssh://jberorri@jberorr.in/home/jberorri/invoice.quickpcservice.in
+          scp -r * jberorri@jberorr.in:/home/jberorri/invoice.quickpcservice.in
